@@ -3,22 +3,24 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.List;
 
-public class Main {
+class ShortWordFilter implements Filter {
+    @Override
+    public boolean accept(Object x) {
+        if (x instanceof String) {
+            String str = (String) x;
+            return str.length() < 5;
+        }
+        return false;
+    }
+}
+
+
+public class ShortLister {
     public static void main(String[] args) {
         // Create an instance of ShortStringFilter
         Filter filter = new ShortWordFilter();
 
-        // List of strings to be filtered
-        List<String> strings = new ArrayList<>();
-        strings.add("Hi");
-        strings.add("Hello");
-        strings.add("Apple");
-        strings.add("Cat");
-        strings.add("Dog");
-
-        // Iterate over the list and print strings that match the condition
 
 
         JFileChooser chooser = new JFileChooser();
@@ -28,9 +30,7 @@ public class Main {
 
         ArrayList<String> words = new ArrayList<>();
 
-//        final int FIELDS_LENGTH = 5;
-//        String id, firstName, lastName, title;
-//        int yob;
+
 
         try {
             // uses a fixed known path:
@@ -59,7 +59,6 @@ public class Main {
 
                     // Finally we can read the file LOL!
                     int line = 0;
-//                    ArrayList<String> words = new ArrayList<>();
 
                     while (reader.ready()) {
                         rec = reader.readLine();
@@ -88,31 +87,7 @@ public class Main {
                         }
                     }
 
-//                    System.out.println("ID#     Firstname                LastName                 Title   YOB\n" +
-//                            "=====================================================================");
-
-
-//                    String[] fields;
-//                    for(String l:lines)
-//                    {
-//                        fields = l.split(",");
 //
-////                        if(fields.length == FIELDS_LENGTH)
-////                        {/*
-////                            id        = fields[0].trim();
-////                            firstName = fields[1].trim();
-////                            lastName  = fields[2].trim();
-////                            title     = fields[3].trim();
-////                            yob       = Integer.parseInt(fields[4].trim());
-////                            Person person = new Person(id, firstName, lastName, title, yob);
-////
-////                            System.out.printf("\n%-8s%-25s%-25s%-6s%6d", person.getID(), person.getFirstName(), person.getLastName(), person.getTitle(), person.getYOB());*/
-////                        }
-////                        else {
-////                            System.out.println("Found a record that may be corrupt: ");
-////                            System.out.println(l);
-////                        }
-//                    }
                 }
             } else  // User closed the chooser without selecting a file
             {
